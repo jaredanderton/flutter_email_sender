@@ -6,8 +6,16 @@ class FlutterEmailSender {
   static const MethodChannel _channel =
       const MethodChannel('flutter_email_sender');
 
-  static Future<String> send(Email mail) async {
-    return await _channel.invokeMethod('send', mail.toJson());
+  static Future<FlutterEmailSenderChannelComposeResult> send(Email mail) async {
+    final result = await _channel.invokeMethod('send', mail.toJson());
+    switch(result) {
+      case "sent": return FlutterEmailSenderChannelComposeResult.sent;
+      case "saved": return FlutterEmailSenderChannelComposeResult.saved;
+      case "cancelled": return FlutterEmailSenderChannelComposeResult.cancelled;
+      case "failed":
+      default:
+        return FlutterEmailSenderChannelComposeResult.failed;
+    }
   }
 }
 
@@ -40,4 +48,9 @@ class Email {
       'is_html': isHTML
     };
   }
+}
+
+
+enum FlutterEmailSenderChannelComposeResult {
+  saved, sent, cancelled, failed
 }
