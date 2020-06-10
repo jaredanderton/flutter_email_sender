@@ -126,7 +126,7 @@ class FlutterEmailSenderPlugin(private val registrar: Registrar)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
         return when (requestCode) {
             REQUEST_CODE_SEND -> {
-                channelResult?.success(null)
+                channelResult?.success(resultCode)
                 return true
             }
             else -> {
