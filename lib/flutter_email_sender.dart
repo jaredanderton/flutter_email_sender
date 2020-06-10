@@ -8,6 +8,8 @@ class FlutterEmailSender {
 
   static Future<FlutterEmailSenderChannelComposeResult> send(Email mail) async {
     final result = await _channel.invokeMethod('send', mail.toJson());
+    print("result: ${result}");
+    print("result: ${result.toString()}");
     switch(result) {
       case "sent": return FlutterEmailSenderChannelComposeResult.sent;
       case "saved": return FlutterEmailSenderChannelComposeResult.saved;
